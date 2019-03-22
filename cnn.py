@@ -7,8 +7,9 @@ from keras import optimizers
 from keras.preprocessing import image
 import cv2
 import os
+import image_filters
 
-save_model = False
+save_model = True
 
 def read_files(path):
     first=True
@@ -17,9 +18,11 @@ def read_files(path):
     for i in os.listdir(path):
         if i.endswith('.jpg') or i.endswith('.png') or i.endswith('.jpeg'):
             img=cv2.imread(path+"/"+i,0)
-            img=cv2.resize(img,(28,28))
+            img=cv2.resize(img,(28,9))
+            img = image_filters.focus_filter(img,0.5,2)   
+            #img = image_filters.sobel_y(img)
             img=pd.DataFrame(data=img)
-            img=img.values.reshape(1,784)
+            img=img.values.reshape(1,252)
             img=pd.DataFrame(data=img)
             outs.append(int(i[0]))
             if first:
@@ -42,11 +45,11 @@ if save_model:
     x_train=train.drop(["label"],axis=1)
     y_train=pd.DataFrame(train["label"])
     '''
-    x_train,y_train=read_files("train")
+    x_train,y_train=read_files("train2")
     
     x_train/=255.0
-    x_train=x_train.values.reshape(-1,28,28,1)
-    y_train=to_categorical(y_train,num_classes=10)
+    x_train=x_train.values.reshape(-1,28,9,1)
+    y_train=to_categorical(y_train,num_classes=8)
     
     x_train,x_test,y_train,y_test=train_test_split(x_train,y_train,\
                                     test_size=0.1,random_state=2)
@@ -54,7 +57,7 @@ if save_model:
     model=Sequential()
     
     model.add(Conv2D(filters = 8, kernel_size = (5,5),padding = 'Same',\
-                     activation ='relu', input_shape = (28,28,1)))
+                     activation ='relu', input_shape = (28,9,1)))
     model.add(MaxPool2D(pool_size=(2,2)))
     model.add(Dropout(0.25))
     
@@ -66,14 +69,16 @@ if save_model:
     model.add(Flatten())
     
     model.add(Dense(128, activation = "relu"))
-    model.add(Dropout(0.5))
+    model.add(Dropout(0.1))
+    model.add(Dense(256, activation = "relu"))
+    model.add(Dropout(0.1))
+    model.add(Dense(128, activation = "relu"))
+    model.add(Dropout(0.1))
     model.add(Dense(64, activation = "relu"))
-    model.add(Dropout(0.5))
+    model.add(Dropout(0.25))
     model.add(Dense(32, activation = "relu"))
-    model.add(Dropout(0.5))
-    model.add(Dense(16, activation = "relu"))
-    model.add(Dropout(0.5))
-    model.add(Dense(10, activation = "softmax"))
+    model.add(Dropout(0.25))
+    model.add(Dense(8, activation = "softmax"))
     
     optimizer = optimizers.Adam(lr=0.001, beta_1=0.9, beta_2=0.999)
     
@@ -88,9 +93,9 @@ if save_model:
     
     datagen.fit(x_train)
     
-    batch_size=100
+    batch_size=1000
     model.fit_generator(datagen.flow(x_train,y_train, batch_size=batch_size),
-                                  epochs= 3000,validation_data = (x_test,y_test),\
+                                  epochs= 5000,validation_data = (x_test,y_test),\
                                   steps_per_epoch=x_train.shape[0] / batch_size)
     model.save("model.h5")
     
@@ -101,12 +106,12 @@ class Detect():
     def __init__(self):
         self.model = load_model("model.h5")
     def set_img(self,img):
-        img=cv2.resize(img,(28,28))
+        img=cv2.resize(img,(28,9))
         img=pd.DataFrame(data=img)
-        img=img.values.reshape(1,784)
+        img=img.values.reshape(1,252)
         img=pd.DataFrame(data=img)
         test = img
         test/=255.0
-        test=test.values.reshape(-1,28,28,1)
+        test=test.values.reshape(-1,28,9,1)
         pred = self.model.predict_classes(test)
         return pred
