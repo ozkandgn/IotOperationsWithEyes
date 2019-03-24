@@ -9,8 +9,11 @@ import cv2
 import os
 import image_filters
 
-save_model = True
+save_model = False
 
+image_x = 45
+image_y = 10
+    
 def read_files(path):
     first=True
     images=[]
@@ -18,11 +21,12 @@ def read_files(path):
     for i in os.listdir(path):
         if i.endswith('.jpg') or i.endswith('.png') or i.endswith('.jpeg'):
             img=cv2.imread(path+"/"+i,0)
-            img=cv2.resize(img,(28,9))
-            img = image_filters.focus_filter(img,0.5,2)   
-            #img = image_filters.sobel_y(img)
+            #img = image_filters.image_operations(img)
+            #cv2.imread("1",img)
+            #cv2.waitKey(3000)
+            img = cv2.resize(img,(image_x,image_y))
             img=pd.DataFrame(data=img)
-            img=img.values.reshape(1,252)
+            img=img.values.reshape(1,(image_x*image_y))
             img=pd.DataFrame(data=img)
             outs.append(int(i[0]))
             if first:
@@ -45,10 +49,10 @@ if save_model:
     x_train=train.drop(["label"],axis=1)
     y_train=pd.DataFrame(train["label"])
     '''
-    x_train,y_train=read_files("train2")
+    x_train,y_train=read_files("train3")
     
     x_train/=255.0
-    x_train=x_train.values.reshape(-1,28,9,1)
+    x_train=x_train.values.reshape(-1,image_x,image_y,1)
     y_train=to_categorical(y_train,num_classes=8)
     
     x_train,x_test,y_train,y_test=train_test_split(x_train,y_train,\
@@ -57,7 +61,7 @@ if save_model:
     model=Sequential()
     
     model.add(Conv2D(filters = 8, kernel_size = (5,5),padding = 'Same',\
-                     activation ='relu', input_shape = (28,9,1)))
+                     activation ='relu', input_shape = (image_x,image_y,1)))
     model.add(MaxPool2D(pool_size=(2,2)))
     model.add(Dropout(0.25))
     
@@ -86,17 +90,10 @@ if save_model:
                   metrics=["accuracy"])
     
     # data augmentation
-    datagen = image.ImageDataGenerator(rotation_range=0.5,
-            zoom_range = 0.5,
-            width_shift_range=0.5,
-            height_shift_range=0.5)
-    
-    datagen.fit(x_train)
     
     batch_size=1000
-    model.fit_generator(datagen.flow(x_train,y_train, batch_size=batch_size),
-                                  epochs= 5000,validation_data = (x_test,y_test),\
-                                  steps_per_epoch=x_train.shape[0] / batch_size)
+    model.fit(x_train,y_train, batch_size=batch_size,
+                                  epochs= 1000)
     model.save("model.h5")
     
 else:
@@ -106,12 +103,15 @@ class Detect():
     def __init__(self):
         self.model = load_model("model.h5")
     def set_img(self,img):
-        img=cv2.resize(img,(28,9))
+        #img = image_filters.image_operations(img)
+        #cv2.imread("2",img)
+        #cv2.waitKey(3000)
+        img = cv2.resize(img,(image_x,image_y))
         img=pd.DataFrame(data=img)
-        img=img.values.reshape(1,252)
+        img=img.values.reshape(1,image_x*image_y)
         img=pd.DataFrame(data=img)
         test = img
         test/=255.0
-        test=test.values.reshape(-1,28,9,1)
+        test=test.values.reshape(-1,image_x,image_y,1)
         pred = self.model.predict_classes(test)
         return pred
