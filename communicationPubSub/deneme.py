@@ -7,7 +7,7 @@ def on_message(client, userdata, message):
     print("message qos=",message.qos)
     print("message retain flag=",message.retain)
 ########################################
-broker_address="Pi Ip Address"
+broker_address="Pi IP Address"
 
 print("creating new instance")
 client = mqtt.Client("P1") #create new instance
