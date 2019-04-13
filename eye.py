@@ -41,13 +41,13 @@ while True:
             print("Left eye=",det.set_img(left_eye))
             key = cv2.waitKey(1) #1000 yap
             if key == 49: # save photo press 1
-                save_eye.take_photo(left_gray_eye,"1loo1")
+                save_eye.take_photo(left_gray_eye,"train3/1loo1")
             if key == 50: # save photo press 2
-                save_eye.take_photo(left_gray_eye,"2lcc1")
+                save_eye.take_photo(left_gray_eye,"train3/2lcc1")
             if key == 51: # save photo press 3
-                save_eye.take_photo(right_gray_eye,"1roo1")
+                save_eye.take_photo(right_gray_eye,"train3/1roo1")
             if key == 52: # save photo press 4
-                save_eye.take_photo(right_gray_eye,"2rcc1")
+                save_eye.take_photo(right_gray_eye,"train3/2rcc1")
         cv2.imshow("Frame", frame)
         if key == 98:
             break
