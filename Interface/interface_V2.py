@@ -9,7 +9,7 @@ from PyQt5 import *
 class denemem(QDialog):
     def __init__(self):
         super(denemem,self).__init__()
-        loadUi('denemem.ui',self)
+        loadUi('denememV2.ui',self)
         self.setWindowTitle('Tez Deneme UI')
         self.artirBtn.clicked.connect(self.artirBtn_clicked)
         self.azaltBtn.clicked.connect(self.azaltBtn_clicked)
