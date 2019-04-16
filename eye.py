@@ -4,22 +4,44 @@ from take_photo import SaveEye
 from create_and_detect import Detector
 from region import Region
 
+from blinking_counter import Blinking
+
 count=0
+
+#
 
 regions = Region()
 save_eye = SaveEye()
 detectors = Detector()
+blinking_right = Blinking()
+blinking_left = Blinking()
+set_blink_right = blinking_right.set_blink
+set_blink_left = blinking_left.set_blink
 key=0
-while True:
-    cap = cv2.VideoCapture(0)
-    det = Detect()
-     
-    font = cv2.FONT_HERSHEY_PLAIN
-    
-    while True:
-        _, frame = cap.read()
+
+rasp = False
+
+class Eye():
+    def __init__(self):
+        if rasp:
+            from get_image_rasp import CapImage
+            from picamera import PiCamera
+            cap = PiCamera() 
+            #cap.color_effects = (128,128)
+            cap.start_preview()
+            c_i = CapImage(cap)
+            self.read_frame = c_i.get_image
+            
+        else:
+            cap = cv2.VideoCapture(0)
+            self.read_frame = cap.read
+            
+        self.det = Detect()
+        
+    def get_frame(self):
+        _, frame = self.read_frame()
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-     
+
         faces = detectors.create(gray)  
         for face in faces:
             
@@ -29,35 +51,37 @@ while True:
             
             right_gray_eye = regions.create(gray,frame,face,[36,37,38,39,40,41])
             left_gray_eye = regions.create(gray,frame,face,[42,43,44,45,46,47])
+
             try:
                 right_eye = cv2.resize(right_gray_eye, None, fx=5, fy=5)
                 left_eye = cv2.resize(left_gray_eye, None, fx=5, fy=5)
+                right_eye_result = float(self.det.set_img(right_eye))
+                left_eye_result = float(self.det.set_img(left_eye))
+
             except:
+                print("hataaaa")
+                right_eye_result = -1
+                left_eye_result = -1
                 pass
             
             #cv2.imshow("Right Eye", right_eye)
-            cv2.imshow("Left Eye", left_eye)
-            print("Right eye=",det.set_img(right_eye))
-            print("Left eye=",det.set_img(left_eye))
-            key = cv2.waitKey(1) #1000 yap
+            #cv2.imshow("Left Eye", left_eye)
+            print("Right eye=",right_eye_result)
+            print("Left eye=",left_eye_result)
+            key = cv2.waitKey(1)
             if key == 49: # save photo press 1
-                save_eye.take_photo(left_gray_eye,"train3/1loo1")
+                save_eye.take_photo(left_gray_eye,"train_rasp/1loo1")
             if key == 50: # save photo press 2
-                save_eye.take_photo(left_gray_eye,"train3/2lcc1")
+                save_eye.take_photo(left_gray_eye,"train_rasp/2lcc1")
             if key == 51: # save photo press 3
-                save_eye.take_photo(right_gray_eye,"train3/1roo1")
+                save_eye.take_photo(right_gray_eye,"train_rasp/1roo1")
             if key == 52: # save photo press 4
-                save_eye.take_photo(right_gray_eye,"train3/2rcc1")
-        cv2.imshow("Frame", frame)
-        if key == 98:
-            break
-            
-    cap.release()
-    cv2.destroyAllWindows()
-    if key == 98:
-        break
-    #return right_gray_eye
+                save_eye.take_photo(right_gray_eye,"train_rasp/2rcc1")
+        
+            cv2.imshow("Frame", frame)
+            #return (right_eye_result,left_eye_result)
+
+eye_test = Eye()
+while True:
+    eye_test.get_frame()
     
-#img = cv2.imread("test/3.png",0)
-
-

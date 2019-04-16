@@ -18,10 +18,10 @@ def focus_filter(img,y,c):
     return new_img.astype(np.uint8)
 
 def enlighten_image(img,y,c):
-	new_img = np.array(img)
-	new_img = c * new_img**y
-	new_img = normalization(new_img,255)
-	return new_img.astype(np.uint8)
+    new_img = np.array(img)
+    new_img = c * new_img**y
+    new_img = normalization(new_img,255)
+    return new_img.astype(np.uint8)
 
 def mean_filter(img):
     filt = np.ones((5,5))/20
@@ -36,7 +36,7 @@ def black_and_white(img):
     print("avg ",avg)
     for i in range(len(img)):
         for j in range(len(img[i])):
-            if img[i,j] == avg:
+            if img[i,j] > avg:
                 img[i,j] = 1
             else:
                 img[i,j] = 0
