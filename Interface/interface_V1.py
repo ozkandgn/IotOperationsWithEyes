@@ -34,3 +34,4 @@ widget=denemem()
 widget.show()
 #sys.exit(app.exec_())
 
+

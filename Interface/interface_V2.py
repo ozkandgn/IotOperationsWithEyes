@@ -73,4 +73,5 @@ if __name__ == "__main__":
         
     except:
         buttonReply = QMessageBox.information(None, 'HATA', "İnternet Bağlantınızı Kontrol Ediniz.")
+
         
