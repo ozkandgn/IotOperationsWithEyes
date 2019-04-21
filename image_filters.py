@@ -33,7 +33,7 @@ def sobel_y(img):
 
 def black_and_white(img):
     avg = np.average(img)
-    print("avg ",avg)
+    #print("avg ",avg)
     for i in range(len(img)):
         for j in range(len(img[i])):
             if img[i,j] > avg:
