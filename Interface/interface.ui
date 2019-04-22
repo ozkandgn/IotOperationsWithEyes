@@ -6,9 +6,73 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>967</width>
-    <height>400</height>
+    <width>1280</width>
+    <height>960</height>
    </rect>
+  </property>
+  <property name="palette">
+   <palette>
+    <active>
+     <colorrole role="Base">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>255</red>
+        <green>255</green>
+        <blue>255</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Window">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>131</red>
+        <green>173</green>
+        <blue>240</blue>
+       </color>
+      </brush>
+     </colorrole>
+    </active>
+    <inactive>
+     <colorrole role="Base">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>255</red>
+        <green>255</green>
+        <blue>255</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Window">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>131</red>
+        <green>173</green>
+        <blue>240</blue>
+       </color>
+      </brush>
+     </colorrole>
+    </inactive>
+    <disabled>
+     <colorrole role="Base">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>131</red>
+        <green>173</green>
+        <blue>240</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Window">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>131</red>
+        <green>173</green>
+        <blue>240</blue>
+       </color>
+      </brush>
+     </colorrole>
+    </disabled>
+   </palette>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
@@ -16,8 +80,8 @@
   <widget class="QPushButton" name="artirBtn">
    <property name="geometry">
     <rect>
-     <x>330</x>
-     <y>300</y>
+     <x>840</x>
+     <y>450</y>
      <width>93</width>
      <height>28</height>
     </rect>
@@ -36,8 +100,8 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>60</x>
-     <y>120</y>
+     <x>470</x>
+     <y>280</y>
      <width>161</width>
      <height>41</height>
     </rect>
@@ -59,8 +123,8 @@
   <widget class="QListWidget" name="listWidget">
    <property name="geometry">
     <rect>
-     <x>270</x>
-     <y>30</y>
+     <x>680</x>
+     <y>190</y>
      <width>256</width>
      <height>231</height>
     </rect>
@@ -104,15 +168,20 @@
    </item>
    <item>
     <property name="text">
-     <string>7- Kitap Oku</string>
+     <string>7- Televizyon Aç</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>8- Kitap Oku</string>
     </property>
    </item>
   </widget>
   <widget class="QPushButton" name="azaltBtn">
    <property name="geometry">
     <rect>
-     <x>140</x>
-     <y>300</y>
+     <x>680</x>
+     <y>450</y>
      <width>91</width>
      <height>31</height>
     </rect>
@@ -128,124 +197,62 @@
     <string>YUKARI</string>
    </property>
   </widget>
-  <widget class="QLabel" name="led1statusLbl">
-   <property name="geometry">
-    <rect>
-     <x>760</x>
-     <y>30</y>
-     <width>201</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>12</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
   <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
-     <x>540</x>
-     <y>30</y>
-     <width>201</width>
-     <height>31</height>
+     <x>570</x>
+     <y>20</y>
+     <width>128</width>
+     <height>128</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>12</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="text">
-    <string>ODA IŞIĞI DURUMU:</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_3">
-   <property name="geometry">
-    <rect>
-     <x>540</x>
-     <y>90</y>
-     <width>211</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>12</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="text">
-    <string>GECE LAMBASI DURUMU:</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="led2statusLbl">
-   <property name="geometry">
-    <rect>
-     <x>760</x>
-     <y>90</y>
-     <width>201</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>12</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
+     <stylestrategy>PreferDefault</stylestrategy>
+     <kerning>true</kerning>
     </font>
    </property>
    <property name="text">
     <string/>
    </property>
   </widget>
-  <widget class="QLabel" name="curtainStatusLbl">
+  <widget class="QLabel" name="nightBulbLbl">
    <property name="geometry">
     <rect>
-     <x>760</x>
-     <y>150</y>
-     <width>201</width>
-     <height>31</height>
+     <x>80</x>
+     <y>470</y>
+     <width>300</width>
+     <height>213</height>
     </rect>
    </property>
-   <property name="font">
-    <font>
-     <pointsize>12</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
    <property name="text">
-    <string/>
+    <string>TextLabel</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_4">
+  <widget class="QLabel" name="curtainLbl">
    <property name="geometry">
     <rect>
-     <x>540</x>
-     <y>150</y>
-     <width>211</width>
-     <height>31</height>
+     <x>1080</x>
+     <y>300</y>
+     <width>170</width>
+     <height>170</height>
     </rect>
    </property>
-   <property name="font">
-    <font>
-     <pointsize>12</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
+   <property name="text">
+    <string>TextLabel</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="tvLbl">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>460</y>
+     <width>400</width>
+     <height>400</height>
+    </rect>
    </property>
    <property name="text">
-    <string>PERDE DURUMU:</string>
+    <string>TextLabel</string>
    </property>
   </widget>
  </widget>
