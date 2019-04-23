@@ -6,27 +6,27 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.uic import loadUi
 from PyQt5 import *
-from television import Television
-from book import Book
+from .television import Television
+from .book import Book
 
 class MainUI(QDialog):
     def __init__(self):
         super(MainUI,self).__init__()
-        loadUi('interface.ui',self)
+        loadUi('Interface/interface.ui',self)
         self.setWindowTitle('MAIN PAGE UI')
         self.setWindowIcon(QtGui.QIcon('Photos/eye.jpg'))
-        self.setStyleSheet("QDialog{background-image: url(Photos/room.jpg); background-repeat: no-repeat; background-position: center;}")
-        self.pixmap2 = QPixmap('Photos/bulb.png')
-        self.pixmap1 = QPixmap('Photos/bulbOpen.png')
+        self.setStyleSheet("QDialog{background-image: url(Interface/Photos/room.jpg); background-repeat: no-repeat; background-position: center;}")
+        self.pixmap2 = QPixmap('Interface/Photos/bulb.png')
+        self.pixmap1 = QPixmap('Interface/Photos/bulbOpen.png')
         self.label_2.setPixmap(self.pixmap2)
-        self.pixmap3 = QPixmap('Photos/nightLamp_close.png')
-        self.pixmap4 = QPixmap('Photos/nightLamp_open.png')
+        self.pixmap3 = QPixmap('Interface/Photos/nightLamp_close.png')
+        self.pixmap4 = QPixmap('Interface/Photos/nightLamp_open.png')
         self.nightBulbLbl.setPixmap(self.pixmap3)
-        self.curtainOpenPix = QPixmap('Photos/curtainOpen.png')
-        self.curtainClosedPix = QPixmap('Photos/curtainClosed.png')
+        self.curtainOpenPix = QPixmap('Interface/Photos/curtainOpen.png')
+        self.curtainClosedPix = QPixmap('Interface/Photos/curtainClosed.png')
         self.curtainLbl.setPixmap(self.curtainClosedPix)
-        self.tvOpenPix = QPixmap('Photos/uniteOpen.png')
-        self.tvClosedPix = QPixmap('Photos/uniteClosed.png')
+        self.tvOpenPix = QPixmap('Interface/Photos/uniteOpen.png')
+        self.tvClosedPix = QPixmap('Interface/Photos/uniteClosed.png')
         self.tvLbl.setPixmap(self.tvClosedPix)
         self.artirBtn.clicked.connect(self.artirBtn_clicked)
         self.azaltBtn.clicked.connect(self.azaltBtn_clicked)
@@ -98,84 +98,81 @@ class MainUI(QDialog):
         if self.curtainStatus():
             self.curtainLbl.setPixmap(self.curtainOpenPix)
 
+class Interface():
+    def __init__(self):
+        self.app = QtWidgets.QApplication(sys.argv)
+        self.bookPage = 0
+        self.tv_frame = 0
+        self.widget = MainUI()
+        self.widget.show()
+        self.book = Book()
+        self.tv = Television()
+        #sys.exit(self.app.exec_())
+        
+    def get_interface_frame(self,command):
+        if self.bookPage:
+            if command == "-":
+                self.book.sayfaAzaltBtn_clicked()
+            elif command == "+":
+                self.book.sayfaArtirBtn_clicked()
+            elif command == "c":
+                if self.book.bookCount == 1:
+                    QtWidgets.QTabWidget.setCurrentIndex(self.book.tabWidget, 1) # sonraki sayfaya git
+                elif self.book.bookCount == 2:
+                    QtWidgets.QTabWidget.setCurrentIndex(self.book.tabWidget, 0) # onceki sayfaya git
+                elif self.book.bookCount == 3:
+                    self.book.close()
+                    self.bookPage = 0
+        
+        elif self.tv_frame:
+            if command == "-":
+                self.tv.tvAzaltBtn_clicked()
+            elif command == "+":
+                self.tv.tvArtirBtn_clicked()
+            elif command == "c":
+                if self.tv.tvCount == 1:
+                    requests.post(self.tv.tvCh1Link)
+                    self.tv.tvStatusLbl.setText("1. Kanal Acik")
+                    self.widget.tvLbl.setPixmap(self.widget.tvOpenPix)
+                elif self.tv.tvCount == 2:
+                    requests.post(self.tv.tvCh2Link)
+                    self.tv.tvStatusLbl.setText("2. Kanal Acik")
+                    self.widget.tvLbl.setPixmap(self.widget.tvOpenPix)
+                elif self.tv.tvCount == 3:
+                    requests.post(self.tv.tvCloseLink)
+                    self.tv.tvStatusLbl.setText("TV Kapali")
+                    self.widget.tvLbl.setPixmap(self.widget.tvClosedPix)
+                elif self.tv.tvCount == 4:
+                    self.tv.close()
+                    self.tv_frame = 0
 
-bookPage = 0
-tv_frame = 0 #state of tv frame
-if __name__ == "__main__":
-    #try:
-    app = QtWidgets.QApplication(sys.argv)
-    widget=MainUI()
-    widget.show()
-    book = Book()
-    tv = Television()
-    #sys.exit(app.exec_())
-    
-    while True:
-        command = input("Enter a command: ")
-        if bookPage:
-            if command == "-":
-                book.sayfaAzaltBtn_clicked()
-            elif command == "+":
-                book.sayfaArtirBtn_clicked()
-            elif command == "c":
-                if book.bookCount == 1:
-                    QtWidgets.QTabWidget.setCurrentIndex(book.tabWidget, 1) # sonraki sayfaya git
-                elif book.bookCount == 2:
-                    QtWidgets.QTabWidget.setCurrentIndex(book.tabWidget, 0) # onceki sayfaya git
-                elif book.bookCount == 3:
-                    book.close()
-                    bookPage = 0
-        elif tv_frame:
-            if command == "-":
-                tv.tvAzaltBtn_clicked()
-            elif command == "+":
-                tv.tvArtirBtn_clicked()
-            elif command == "c":
-                if tv.tvCount == 1:
-                    requests.post(tv.tvCh1Link)
-                    tv.tvStatusLbl.setText("1. Kanal Acik")
-                    widget.tvLbl.setPixmap(widget.tvOpenPix)
-                elif tv.tvCount == 2:
-                    requests.post(tv.tvCh2Link)
-                    tv.tvStatusLbl.setText("2. Kanal Acik")
-                    widget.tvLbl.setPixmap(widget.tvOpenPix)
-                elif tv.tvCount == 3:
-                    requests.post(tv.tvCloseLink)
-                    tv.tvStatusLbl.setText("TV Kapali")
-                    widget.tvLbl.setPixmap(widget.tvClosedPix)
-                elif tv.tvCount == 4:
-                    tv.close()
-                    tv_frame = 0
         else:
             if command == "-":
-                widget.azaltBtn_clicked()
+                self.widget.azaltBtn_clicked()
             elif command == "+":
-                widget.artirBtn_clicked()
+                self.widget.artirBtn_clicked()
             elif command == "c":
-                if(widget.count == 1):
-                    requests.post(widget.led1OnLink)
-                    widget.led1StatusShow()
-                elif(widget.count == 2):
-                    requests.post(widget.led1OffLink)
-                    widget.led1StatusShow()
-                elif(widget.count == 3):
-                    requests.post(widget.led2OnLink)
-                    widget.led2StatusShow()
-                elif(widget.count == 4):
-                    requests.post(widget.led2OffLink)
-                    widget.led2StatusShow()
-                elif(widget.count == 5):
-                    requests.post(widget.curtainOnLink)
-                    widget.curtainStatusShow()
-                elif(widget.count == 6):
-                    requests.post(widget.curtainOffLink)
-                    widget.curtainStatusShow()
-                elif(widget.count == 7):
-                    tv_frame = 1
-                    tv.show()
-                elif(widget.count == 8):
-                    bookPage=1
-                    book.show()
-        
-    #except:
-        #buttonReply = QMessageBox.information(None, 'HATA', "Ä°nternet BaÄŸlantÄ±nÄ±zÄ± Kontrol Ediniz.")
+                if(self.widget.count == 1):
+                    requests.post(self.widget.led1OnLink)
+                    self.widget.led1StatusShow()
+                elif(self.widget.count == 2):
+                    requests.post(self.widget.led1OffLink)
+                    self.widget.led1StatusShow()
+                elif(self.widget.count == 3):
+                    requests.post(self.widget.led2OnLink)
+                    self.widget.led2StatusShow()
+                elif(self.widget.count == 4):
+                    requests.post(self.widget.led2OffLink)
+                    self.widget.led2StatusShow()
+                elif(self.widget.count == 5):
+                    requests.post(self.widget.curtainOnLink)
+                    self.widget.curtainStatusShow()
+                elif(self.widget.count == 6):
+                    requests.post(self.widget.curtainOffLink)
+                    self.widget.curtainStatusShow()
+                elif (self.widget.count == 7):
+                    self.tv_frame = 1
+                    self.tv.show()
+                elif(self.widget.count == 8):
+                    self.bookPage = 1
+                    self.book.show()
