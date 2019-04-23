@@ -10,7 +10,7 @@ from PyQt5 import *
 class Book(QMainWindow):
     def __init__(self):
         super(Book,self).__init__()
-        loadUi('books.ui',self)
+        loadUi('Interface/books.ui',self)
         self.setWindowTitle('Kitap Okuma UI')
         self.bookCount = 0
         self.pageNo = 0

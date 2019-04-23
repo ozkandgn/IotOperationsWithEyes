@@ -11,7 +11,7 @@ from PyQt5 import *
 class Television(QMainWindow):
     def __init__(self):
         super(Television, self).__init__()
-        loadUi('television.ui',self)
+        loadUi('Interface/television.ui',self)
         self.setWindowTitle('Televizyon Kontrol Arayüzü')
         self.tvCount = 0
         self.tvArtirBtn.clicked.connect(self.tvArtirBtn_clicked)
