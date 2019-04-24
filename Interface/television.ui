@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>918</width>
-    <height>370</height>
+    <height>616</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,8 +17,8 @@
    <widget class="QListWidget" name="tvListWidget">
     <property name="geometry">
      <rect>
-      <x>270</x>
-      <y>50</y>
+      <x>320</x>
+      <y>130</y>
       <width>256</width>
       <height>192</height>
      </rect>
@@ -74,8 +74,8 @@
    <widget class="QPushButton" name="tvArtirBtn">
     <property name="geometry">
      <rect>
-      <x>100</x>
-      <y>280</y>
+      <x>340</x>
+      <y>350</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -93,8 +93,8 @@
    <widget class="QPushButton" name="tvAzaltBtn">
     <property name="geometry">
      <rect>
-      <x>230</x>
-      <y>280</y>
+      <x>470</x>
+      <y>350</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -112,8 +112,8 @@
    <widget class="QPushButton" name="tvOnaylaBtn">
     <property name="geometry">
      <rect>
-      <x>370</x>
-      <y>280</y>
+      <x>400</x>
+      <y>390</y>
       <width>75</width>
       <height>23</height>
      </rect>
