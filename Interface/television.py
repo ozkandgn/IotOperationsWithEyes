@@ -17,10 +17,11 @@ class Television(QMainWindow):
         self.tvCount = 0
         self.tvArtirBtn.clicked.connect(self.tvArtirBtn_clicked)
         self.tvAzaltBtn.clicked.connect(self.tvAzaltBtn_clicked)
-        self.tvCh1Link = "http://192.168.137.103/3/kanal1"
-        self.tvCh2Link = "http://192.168.137.103/3/kanal2"
-        self.tvCloseLink = "http://192.168.137.103/3/kapat"
-        self.statusLink = "http://192.168.137.103/3"
+        IP="http://192.168.137.101"
+        self.tvCh1Link = IP+"/3/kanal1"
+        self.tvCh2Link = IP+"/3/kanal2"
+        self.tvCloseLink =IP+"/3/kapat"
+        self.statusLink = IP+"/3"
 
     @pyqtSlot()
     def tvArtirBtn_clicked(self):
