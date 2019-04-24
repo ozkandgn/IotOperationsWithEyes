@@ -1,4 +1,4 @@
-from calculate import midpoint
+from .calculate import midpoint
 from math import hypot
 
 def get_blinking_ratio(eye_points, facial_landmarks):

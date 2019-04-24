@@ -1,6 +1,6 @@
 from Interface.interface_Opr import Interface
-from eye import Eye
-from blinking_counter import Blinking
+from Image_Processing.eye import Eye
+from Image_Processing.blinking_counter import Blinking
 import time
 
 class Manage():

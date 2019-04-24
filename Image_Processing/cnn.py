@@ -7,7 +7,7 @@ from keras import optimizers
 from keras.preprocessing import image
 import cv2
 import os
-import image_filters
+from . import image_filters
 
 save_model = False
 

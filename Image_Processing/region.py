@@ -1,5 +1,5 @@
 import cv2
-from create_and_detect import Landmark
+from .create_and_detect import Landmark
 import numpy as np
 
 class Region():

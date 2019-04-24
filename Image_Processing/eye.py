@@ -1,8 +1,8 @@
 import cv2
-from cnn import Detect
-from take_photo import SaveEye
-from create_and_detect import Detector
-from region import Region
+from .cnn import Detect
+from .take_photo import SaveEye
+from .create_and_detect import Detector
+from .region import Region
 
 from blinking_counter import Blinking
 
