@@ -38,9 +38,9 @@ class MainUI(QDialog):
         self.led1StatusLink = IP+"/14" #defining default link
         self.led1OnLink = IP+"/14/on"
         self.led1OffLink = IP+"/14/off"
-        self.led2StatusLink = IP+"/12" #defining default link
-        self.led2OnLink = IP+"/12/on"
-        self.led2OffLink = IP+"/12/off"
+        self.led2StatusLink = IP+"/0" #defining default link of night lamp
+        self.led2OnLink = IP+"/0/on"
+        self.led2OffLink = IP+"/0/off"
         self.curtainStatusLink = IP+"/2"
         self.curtainOnLink = IP+"/2/on"
         self.curtainOffLink = IP+"/2/off"
