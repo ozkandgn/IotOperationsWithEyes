@@ -8,11 +8,11 @@ LiquidCrystal_I2C lcd(0x3f, 16, 2);
 
 #ifndef Wifi_Name
 #define Wifi_Name "Connectify-tez"
-#define Wifi_Pass  "[Pass]"
+#define Wifi_Pass  "[Wifi Şifre]"
 #endif
 
-#define KullaniciAdi "[kullanıcı adı]"
-#define KullaniciSifre "[kullanıcı şifre]"
+#define KullaniciAdi "[Kullanici Adi]"
+#define KullaniciSifre "[Kullanici Şifre]"
 
 const char* ssid = Wifi_Name;
 const char* password = Wifi_Pass;
@@ -27,7 +27,7 @@ String Channel = "";
 
 // GPIO pinleri tanımlandı.
 const int Indoor_Lighting_Pin = 14;
-const int Night_Light_Pin = 12;
+const int Night_Light_Pin = 0;
 const int servoPin = 2;
 
 ESP8266WebServer server(80);
@@ -131,18 +131,18 @@ void handleRoot() {
       content += "<p><a href=\"/14/off\"><button class=\"button button2\">Kapat</button></a></p>";
     }
 
-    String pin12durumu = "Kapalı";
+    String pin0durumu = "Kapalı";
     if (Night_Light_State == "on")
-      pin12durumu = "Açık";
-    content += "<p>Gece Lambası - Durumu " + pin12durumu + "</p>";
+      pin0durumu = "Açık";
+    content += "<p>Gece Lambası - Durumu " + pin0durumu + "</p>";
 
     if (!digitalRead(Night_Light_Pin))
     {
-      content += "<p><a href=\"/12/on\"><button class=\"button\">Aç</button></a></p>";
+      content += "<p><a href=\"/0/on\"><button class=\"button\">Aç</button></a></p>";
     }
     else
     {
-      content += "<p><a href=\"/12/off\"><button class=\"button button2\">Kapat</button></a></p>";
+      content += "<p><a href=\"/0/off\"><button class=\"button button2\">Kapat</button></a></p>";
     }
 
     String pin2durumu = "Kapalı";
@@ -239,7 +239,7 @@ void handleNotFound() {
     else
       server.send(404, "text/plain", message);
   }
-  if (server.uri() == "/12/on")
+  if (server.uri() == "/0/on")
   {
     if (server.hasHeader("User-Agent"))
     {
@@ -254,7 +254,7 @@ void handleNotFound() {
     else
       server.send(404, "text/plain", message);
   }
-  if (server.uri() == "/12/off")
+  if (server.uri() == "/0/off")
   {
     if (server.hasHeader("User-Agent"))
     {
@@ -267,7 +267,7 @@ void handleNotFound() {
     else
       server.send(404, "text/plain", message);
   }
-  if (server.uri() == "/12")
+  if (server.uri() == "/0")
   {
     if (server.hasHeader("User-Agent"))
     {
