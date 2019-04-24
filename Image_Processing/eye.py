@@ -4,7 +4,7 @@ from .take_photo import SaveEye
 from .create_and_detect import Detector
 from .region import Region
 
-from blinking_counter import Blinking
+from .blinking_counter import Blinking
 
 count=0
 
@@ -17,12 +17,12 @@ set_blink_right = blinking_right.set_blink
 set_blink_left = blinking_left.set_blink
 key=0
 
-rasp = True
+rasp = False
 
 class Eye():
     def __init__(self):
         if rasp:
-            from get_image_rasp import CapImage
+            from .get_image_rasp import CapImage
             from picamera import PiCamera
             cap = PiCamera() 
             #cap.color_effects = (128,128)

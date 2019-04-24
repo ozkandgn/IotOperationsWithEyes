@@ -15,7 +15,7 @@ class MainUI(QDialog):
         loadUi('Interface/interface.ui',self)
         self.setWindowTitle('MAIN PAGE UI')
         self.setWindowIcon(QtGui.QIcon('Photos/eye.jpg'))
-        self.setStyleSheet("QDialog{background-image: url(Interface/Photos/room.jpg); background-repeat: no-repeat; background-position: center;}")
+        self.setStyleSheet("QDialog{background-image: url(Interface/Photos/room3.jpg); background-repeat: no-repeat; background-position: center;}")
         self.pixmap2 = QPixmap('Interface/Photos/bulb.png')
         self.pixmap1 = QPixmap('Interface/Photos/bulbOpen.png')
         self.label_2.setPixmap(self.pixmap2)
@@ -32,15 +32,16 @@ class MainUI(QDialog):
         self.azaltBtn.clicked.connect(self.azaltBtn_clicked)
         self.onaylaBtn.clicked.connect(self.onaylaBtn_clicked)
         self.count = 0
-        self.led1StatusLink = "http://192.168.137.103/14" #defining default link
-        self.led1OnLink = "http://192.168.137.103/14/on"
-        self.led1OffLink = "http://192.168.137.103/14/off"
-        self.led2StatusLink = "http://192.168.137.103/12" #defining default link
-        self.led2OnLink = "http://192.168.137.103/12/on"
-        self.led2OffLink = "http://192.168.137.103/12/off"
-        self.curtainStatusLink = "http://192.168.137.103/2"
-        self.curtainOnLink = "http://192.168.137.103/2/on"
-        self.curtainOffLink = "http://192.168.137.103/2/off"
+        IP="http://192.168.137.101"
+        self.led1StatusLink = IP+"/14" #defining default link
+        self.led1OnLink = IP+"/14/on"
+        self.led1OffLink = IP+"/14/off"
+        self.led2StatusLink = IP+"/12" #defining default link
+        self.led2OnLink = IP+"/12/on"
+        self.led2OffLink = IP+"/12/off"
+        self.curtainStatusLink = IP+"/2"
+        self.curtainOnLink = IP+"/2/on"
+        self.curtainOffLink = IP+"/2/off"
         self.led1StatusShow()
         self.led2StatusShow()
         self.curtainStatusShow()
