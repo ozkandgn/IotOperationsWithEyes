@@ -100,15 +100,15 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>470</x>
-     <y>280</y>
+     <x>480</x>
+     <y>230</y>
      <width>161</width>
-     <height>41</height>
+     <height>121</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>30</pointsize>
+     <pointsize>50</pointsize>
      <weight>75</weight>
      <bold>true</bold>
     </font>
@@ -124,9 +124,9 @@
    <property name="geometry">
     <rect>
      <x>680</x>
-     <y>190</y>
+     <y>180</y>
      <width>256</width>
-     <height>231</height>
+     <height>251</height>
     </rect>
    </property>
    <property name="font">
@@ -273,6 +273,19 @@
    </property>
    <property name="text">
     <string>ONAYLA</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="frameLbl">
+   <property name="geometry">
+    <rect>
+     <x>470</x>
+     <y>220</y>
+     <width>181</width>
+     <height>141</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
    </property>
   </widget>
  </widget>
