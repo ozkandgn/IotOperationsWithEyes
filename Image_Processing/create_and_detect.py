@@ -3,7 +3,7 @@ import numpy as np
 
 class Landmark():
     def __init__(self):
-        self.predictor = shape_predictor("shape_predictor_68_face_landmarks.dat")
+        self.predictor = shape_predictor("Image_Processing/shape_predictor_68_face_landmarks.dat")
         
     def create(self,gray,face,points):
         

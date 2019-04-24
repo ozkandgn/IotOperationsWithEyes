@@ -50,7 +50,7 @@ if save_model:
     x_train=train.drop(["label"],axis=1)
     y_train=pd.DataFrame(train["label"])
     '''
-    x_train,y_train=read_files("train3")
+    x_train,y_train=read_files("Image_Processing/train3")
     
     x_train/=255.0
     x_train=x_train.values.reshape(-1,image_x,image_y,1)
@@ -88,14 +88,14 @@ if save_model:
     
     batch_size=1000
     model.fit(x_train,y_train,batch_size = batch_size,epochs= 1000)
-    model.save("model.h5")
+    model.save("Image_Processing/model.h5")
     
 else:
-    model = load_model("model.h5")
+    model = load_model("Image_Processing/model.h5")
 
 class Detect():
     def __init__(self):
-        self.model = load_model("model.h5")
+        self.model = load_model("Image_Processing/model.h5")
     def set_img(self,img):
         img = cv2.resize(img,(image_x,image_y))
         img = image_filters.black_and_white(img)
