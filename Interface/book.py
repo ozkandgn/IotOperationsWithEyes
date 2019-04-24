@@ -16,6 +16,7 @@ class Book(QMainWindow):
         self.pageNo = 0
         self.sayfaArtirBtn.clicked.connect(self.sayfaArtirBtn_clicked)
         self.sayfaAzaltBtn.clicked.connect(self.sayfaAzaltBtn_clicked)
+        self.kitapOnaylaBtn.clicked.connect(self.kitapOnaylaBtn_clicked)
 
     @pyqtSlot()
     def sayfaArtirBtn_clicked(self):
@@ -33,4 +34,13 @@ class Book(QMainWindow):
         self.pageLbl.setText(''+str(int(self.bookCount)))
         self.bookListWidget.setCurrentRow(self.bookCount-1)
         print(str(self.bookListWidget.currentItem().text()))
+
+    def kitapOnaylaBtn_clicked(self):
+        if self.bookCount == 1:
+            QtWidgets.QTabWidget.setCurrentIndex(self.book.tabWidget, 1) # sonraki sayfaya git
+        elif self.bookCount == 2:
+            QtWidgets.QTabWidget.setCurrentIndex(self.book.tabWidget, 0) # onceki sayfaya git
+        elif self.bookCount == 3:
+            self.close()
+            self.bookPage = 0
 

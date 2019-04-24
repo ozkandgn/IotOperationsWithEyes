@@ -13,6 +13,7 @@ class Television(QMainWindow):
         super(Television, self).__init__()
         loadUi('Interface/television.ui',self)
         self.setWindowTitle('Televizyon Kontrol Arayüzü')
+        self.setStyleSheet("QMainWindow{background-image: url(Interface/Photos/tvBackground.png); background-repeat: no-repeat; background-position: center;}")
         self.tvCount = 0
         self.tvArtirBtn.clicked.connect(self.tvArtirBtn_clicked)
         self.tvAzaltBtn.clicked.connect(self.tvAzaltBtn_clicked)
