@@ -164,6 +164,25 @@ p, li { white-space: pre-wrap; }
      <string>Azalt</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="kitapOnaylaBtn">
+    <property name="geometry">
+     <rect>
+      <x>740</x>
+      <y>320</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Onayla</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>

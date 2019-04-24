@@ -30,6 +30,7 @@ class MainUI(QDialog):
         self.tvLbl.setPixmap(self.tvClosedPix)
         self.artirBtn.clicked.connect(self.artirBtn_clicked)
         self.azaltBtn.clicked.connect(self.azaltBtn_clicked)
+        self.onaylaBtn.clicked.connect(self.onaylaBtn_clicked)
         self.count = 0
         self.led1StatusLink = "http://192.168.137.103/14" #defining default link
         self.led1OnLink = "http://192.168.137.103/14/on"
@@ -43,6 +44,8 @@ class MainUI(QDialog):
         self.led1StatusShow()
         self.led2StatusShow()
         self.curtainStatusShow()
+        self.book = Book()
+        self.tv = Television()
             
         
     @pyqtSlot()
@@ -61,6 +64,32 @@ class MainUI(QDialog):
         self.label.setText(''+str(int(self.count)))
         self.listWidget.setCurrentRow(self.count-1)
         print(str(self.listWidget.currentItem().text()))
+
+    def onaylaBtn_clicked(self):
+        if(self.count == 1):
+            requests.post(self.led1OnLink)
+            self.led1StatusShow()
+        elif(self.count == 2):
+            requests.post(self.led1OffLink)
+            self.led1StatusShow()
+        elif(self.count == 3):
+            requests.post(self.led2OnLink)
+            self.led2StatusShow()
+        elif(self.count == 4):
+            requests.post(self.led2OffLink)
+            self.led2StatusShow()
+        elif(self.count == 5):
+            requests.post(self.curtainOnLink)
+            self.curtainStatusShow()
+        elif(self.count == 6):
+            requests.post(self.curtainOffLink)
+            self.curtainStatusShow()
+        elif (self.count == 7):
+            tv_frame = 1
+            self.tv.show()
+        elif(self.count == 8):
+            bookPage = 1
+            self.book.show()
 
     def led1Status(self):
         try:
@@ -153,7 +182,10 @@ class Interface():
                 self.widget.artirBtn_clicked()
             elif command == "c":
                 if(self.widget.count == 1):
-                    requests.post(self.widget.led1OnLink)
+                    try:
+                        requests.post(self.widget.led1OnLink)
+                    except:
+                        pass
                     self.widget.led1StatusShow()
                 elif(self.widget.count == 2):
                     requests.post(self.widget.led1OffLink)
