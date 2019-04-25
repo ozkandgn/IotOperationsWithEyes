@@ -15,6 +15,7 @@ class Television(QMainWindow):
         self.setWindowTitle('Televizyon Kontrol Arayüzü')
         self.setStyleSheet("QMainWindow{background-image: url(Interface/Photos/tvBackground.png); background-repeat: no-repeat; background-position: center;}")
         self.tvCount = 0
+        self.setFixedSize(918,616)
         self.tvArtirBtn.clicked.connect(self.tvArtirBtn_clicked)
         self.tvAzaltBtn.clicked.connect(self.tvAzaltBtn_clicked)
         IP="http://192.168.137.101"
