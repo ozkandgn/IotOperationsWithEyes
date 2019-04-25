@@ -15,6 +15,7 @@ class MainUI(QDialog):
         loadUi('Interface/interface.ui',self)
         self.setWindowTitle('MAIN PAGE UI')
         self.setWindowIcon(QtGui.QIcon('Photos/eye.jpg'))
+        self.setFixedSize(1280,960)
         self.setStyleSheet("QDialog{background-image: url(Interface/Photos/room3.jpg); background-repeat: no-repeat; background-position: center;}")
         self.countPix = QPixmap('Interface/Photos/countFrame2.png')
         self.frameLbl.setPixmap(self.countPix)

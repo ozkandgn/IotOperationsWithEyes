@@ -17,8 +17,8 @@
    <widget class="QListWidget" name="tvListWidget">
     <property name="geometry">
      <rect>
-      <x>320</x>
-      <y>130</y>
+      <x>380</x>
+      <y>120</y>
       <width>256</width>
       <height>192</height>
      </rect>
@@ -54,15 +54,15 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>70</x>
-      <y>80</y>
+      <x>230</x>
+      <y>160</y>
       <width>141</width>
       <height>51</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>20</pointsize>
+      <pointsize>30</pointsize>
       <weight>75</weight>
       <bold>true</bold>
      </font>
@@ -74,10 +74,10 @@
    <widget class="QPushButton" name="tvArtirBtn">
     <property name="geometry">
      <rect>
-      <x>340</x>
-      <y>350</y>
-      <width>75</width>
-      <height>23</height>
+      <x>390</x>
+      <y>330</y>
+      <width>81</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="font">
@@ -93,10 +93,10 @@
    <widget class="QPushButton" name="tvAzaltBtn">
     <property name="geometry">
      <rect>
-      <x>470</x>
-      <y>350</y>
-      <width>75</width>
-      <height>23</height>
+      <x>530</x>
+      <y>330</y>
+      <width>81</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="font">
@@ -112,10 +112,10 @@
    <widget class="QPushButton" name="tvOnaylaBtn">
     <property name="geometry">
      <rect>
-      <x>400</x>
-      <y>390</y>
-      <width>75</width>
-      <height>23</height>
+      <x>460</x>
+      <y>380</y>
+      <width>81</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="font">
@@ -131,8 +131,8 @@
    <widget class="QLabel" name="tvStatusLbl">
     <property name="geometry">
      <rect>
-      <x>70</x>
-      <y>160</y>
+      <x>230</x>
+      <y>230</y>
       <width>141</width>
       <height>51</height>
      </rect>

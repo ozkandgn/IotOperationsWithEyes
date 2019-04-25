@@ -13,6 +13,7 @@ class Book(QMainWindow):
         loadUi('Interface/books.ui',self)
         self.setWindowTitle('Kitap Okuma UI')
         self.setStyleSheet("QMainWindow{background-image: url(Interface/Photos/bookBackground.png); background-repeat: no-repeat; background-position: center;}")
+        self.setFixedSize(930,662)
         self.bookCount = 0
         self.pageNo = 0
         self.sayfaArtirBtn.clicked.connect(self.sayfaArtirBtn_clicked)
