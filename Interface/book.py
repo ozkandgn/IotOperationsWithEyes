@@ -15,7 +15,10 @@ class Book(QMainWindow):
         self.setStyleSheet("QMainWindow{background-image: url(Interface/Photos/bookBackground.png); background-repeat: no-repeat; background-position: center;}")
         self.setFixedSize(930,662)
         self.bookCount = 0
-        self.pageNo = 0
+        degerler = list()
+        self.pageNo = int()
+        self.read1()
+        self.textEdit.setText(''+str(self.degerler[int(self.pageNo)])+ "\n\n\n" + str(self.pageNo+1))
         self.sayfaArtirBtn.clicked.connect(self.sayfaArtirBtn_clicked)
         self.sayfaAzaltBtn.clicked.connect(self.sayfaAzaltBtn_clicked)
         self.kitapOnaylaBtn.clicked.connect(self.kitapOnaylaBtn_clicked)
@@ -39,10 +42,28 @@ class Book(QMainWindow):
 
     def kitapOnaylaBtn_clicked(self):
         if self.bookCount == 1:
-            QtWidgets.QTabWidget.setCurrentIndex(self.book.tabWidget, 1) # sonraki sayfaya git
+            self.nextPage()
         elif self.bookCount == 2:
-            QtWidgets.QTabWidget.setCurrentIndex(self.book.tabWidget, 0) # onceki sayfaya git
+            self.prevPage()
         elif self.bookCount == 3:
             self.close()
             self.bookPage = 0
 
+    def nextPage(self):
+        self.pageNo = self.pageNo + 1
+        if(self.pageNo >= len(self.degerler)):
+            self.pageNo = 0
+        self.textEdit.setText(''+str(self.degerler[int(self.pageNo)])+ "\n\n\n" + str(self.pageNo+1))
+
+    def prevPage(self):
+        self.pageNo = self.pageNo - 1
+        if(self.pageNo <= 0):
+            self.pageNo = len(self.degerler) - 1
+        self.textEdit.setText(''+str(self.degerler[int(self.pageNo)]))
+        
+    def read1(self):
+        f = open("Interface/sefiller1.txt", "r")
+        icerik = f.read()
+        self.degerler = list()
+        for satir in icerik.split('\n'):
+            self.degerler.append(satir) 

@@ -28,15 +28,15 @@
     </property>
     <widget class="QWidget" name="Sayfa1">
      <attribute name="title">
-      <string>Sayfa 1</string>
+      <string>1. Kitap</string>
      </attribute>
      <widget class="QTextEdit" name="textEdit">
       <property name="geometry">
        <rect>
         <x>10</x>
         <y>10</y>
-        <width>341</width>
-        <height>401</height>
+        <width>351</width>
+        <height>431</height>
        </rect>
       </property>
       <property name="html">
@@ -44,21 +44,21 @@
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;sayfa 1 dsakhdkjlashdkjashldkjashlfkjhaslkjfhalskjfas&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
      </widget>
     </widget>
     <widget class="QWidget" name="Sayfa2">
      <attribute name="title">
-      <string>Sayfa 2</string>
+      <string>2. Kitap</string>
      </attribute>
      <widget class="QTextEdit" name="textEdit_2">
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>10</y>
-        <width>611</width>
-        <height>301</height>
+        <y>0</y>
+        <width>361</width>
+        <height>441</height>
        </rect>
       </property>
       <property name="html">
@@ -66,7 +66,7 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;sayfa 2 askjdhasjkdhaklsjdhlkajs&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
      </widget>
     </widget>
