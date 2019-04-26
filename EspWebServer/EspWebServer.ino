@@ -8,11 +8,11 @@ LiquidCrystal_I2C lcd(0x3f, 16, 2);
 
 #ifndef Wifi_Name
 #define Wifi_Name "Connectify-tez"
-#define Wifi_Pass  "[Wifi Şifre]"
+#define Wifi_Pass  "tez12345"
 #endif
 
-#define KullaniciAdi "[Kullanici Adi]"
-#define KullaniciSifre "[Kullanici Şifre]"
+#define KullaniciAdi "admin"
+#define KullaniciSifre "admin"
 
 const char* ssid = Wifi_Name;
 const char* password = Wifi_Pass;
@@ -82,15 +82,27 @@ void handleLogin() {
   msg = "Wrong username/password! try again.";
   String content = "<meta http-equiv=Content-Type";
   content += "text/html charset=utf-8 />";
-  content += "<style>html { font-family: Helvetica; display: inline-block; margin: 0px auto; text-align: center;}";
-  content += ".buttongiris { background-color: darkgreen; border: none; color: black; padding: 1px 92px;";
-  content += "text-decoration: none; font-size: 20px; margin: -9px; cursor: pointer;}";
+  content += "<meta name=viewport content=width=device-width, initial-scale=1>";
+  content += "<style>body {font-family: Arial, Helvetica, sans-serif;}form {border: 3px solid #f1f1f1;}";
+  content += "input[type=text], input[type=password] {width: 100%;padding: 12px 20px;margin: 8px 0;display: inline-block;border: 1px solid #ccc;box-sizing: border-box;}";
+  content += "button {background-color: #4CAF50;color: white;padding: 14px 20px;margin: 8px 0;border: none;cursor: pointer; width: 100%;}";
+  content += "button:hover {opacity: 0.8;}";
+  content += ".imgcontainer {text-align: center;margin: 24px 0 12px 0;}";
+  content += "img.avatar {width: 40%;border-radius: 50%;}";
+  content += ".container {padding: 16px;}";
+  content += "span.psw {float: right; padding-top: 16px;}";
+  content += "@media screen and (max-width: 300px){span.psw {display: block;float: none;}";
   content += "</style></head>";
-  content += "<html><body><form action='/login' method='POST'>Lütfen Giriş Yapınız!<br>";
-  content += "Kullanıcı Adı &nbsp:<input type='text' name='USERNAME' placeholder='Kullanıcı Adı'><br>";
-  content += "Kullanıcı Şifre:<input type='password' name='PASSWORD' placeholder='Kullanıcı Şifre'><br>";
-  content += "<p><button class=\"buttongiris\">Giriş yap</button></p>";
+
+
+  content += "<html><body > <form action='/login' method='POST'>Lütfen Giriş Yapınız!<br>";
+  content += " <div class=imgcontainer> <img src=https://www.w3schools.com/howto/img_avatar2.png alt=Avatar class=avatar></div>";
+  content += "Kullanıcı Adı &nbsp:<input type='text' name='USERNAME' placeholder='Kullanıcı Adı' required><br>";
+  content += "Kullanıcı Şifre:<input type='password' name='PASSWORD' placeholder='Kullanıcı Şifre' required><br>";
+  content += "<p><button class=\"buttongiris\" >Giriş yap</button></p>";
   content += "Tez hakkında bilgi almak için: <a href='/inline'>Buraya Tıklayınız.</a></body></html>";
+  //content +="<img src= alt=Reis width=500 height=600>";
+
   server.send(200, "text/html", content);
 }
 
@@ -170,12 +182,12 @@ void handleRoot() {
     if (!(Channel == "Kanal 1"))
     {
       content += "<p><a href=\"/3/kanal1\"><button class=\"button\">Kanal1</button></a></p>";
-    } 
+    }
     else
     {
       content += "<p><a href=\"/3/kanal2\"><button class=\"button button2\">Kanal2</button></a></p>";
     }
-    if ((Channel == "Kanal 1")or(Channel == "Kanal 2"))
+    if ((Channel == "Kanal 1") or (Channel == "Kanal 2"))
     {
       content += "<p><a href=\"/3/kapat\"><button class=\"button\">Kapat</button></a></p>";
     }
@@ -203,185 +215,116 @@ void handleNotFound() {
   }
   if (server.uri() == "/14/on")
   {
-    if (server.hasHeader("User-Agent"))
-    {
+    Indoor_Lighting_State = "on";
+    server.uri() = "";
+    digitalWrite(Indoor_Lighting_Pin, HIGH);
+    handleRoot();
+    server.send(404, "text/plain", message);
+  }
+  else if (server.uri() == "/14/off")
+  {
+    Indoor_Lighting_State = "off";
+    server.uri() = "";
+    digitalWrite(Indoor_Lighting_Pin, LOW);
+    handleRoot();
 
-      Indoor_Lighting_State = "on";
-      //server.send(200,"text/plain","1");
-      server.uri() = "";
-      digitalWrite(Indoor_Lighting_Pin, HIGH);
-      handleRoot();
+  }
+  else if (server.uri() == "/14")
+  {
 
-    }
-    else
-      server.send(404, "text/plain", message);
+    Indoor_Lighting_State = digitalRead(Indoor_Lighting_Pin);
+    server.send(200, "text/plain", Indoor_Lighting_State);
   }
-  if (server.uri() == "/14/off")
+  else if (server.uri() == "/0/on")
   {
-    if (server.hasHeader("User-Agent"))
-    {
-      Indoor_Lighting_State = "off";
-      //server.send(200,"text/plain","0");
-      server.uri() = "";
-      digitalWrite(Indoor_Lighting_Pin, LOW);
-      handleRoot();
-    }
-    else
-      server.send(404, "text/plain", message);
-  }
-  if (server.uri() == "/14")
-  {
-    if (server.hasHeader("User-Agent"))
-    {
-      Indoor_Lighting_State = digitalRead(Indoor_Lighting_Pin);
-      server.send(200, "text/plain", Indoor_Lighting_State);
-    }
-    else
-      server.send(404, "text/plain", message);
-  }
-  if (server.uri() == "/0/on")
-  {
-    if (server.hasHeader("User-Agent"))
-    {
+    Night_Light_State = "on";
+    server.uri() = "";
+    digitalWrite(Night_Light_Pin, HIGH);
+    handleRoot();
 
-      Night_Light_State = "on";
-      //server.send(200,"text/plain","1");
-      server.uri() = "";
-      digitalWrite(Night_Light_Pin, HIGH);
-      handleRoot();
+  }
+  else if (server.uri() == "/0/off")
+  {
+    Night_Light_State = "off";
+    server.uri() = "";
+    digitalWrite(Night_Light_Pin, LOW);
+    handleRoot();
 
-    }
-    else
-      server.send(404, "text/plain", message);
   }
-  if (server.uri() == "/0/off")
+  else if (server.uri() == "/0")
   {
-    if (server.hasHeader("User-Agent"))
-    {
-      Night_Light_State = "off";
-      //server.send(200,"text/plain","0");
-      server.uri() = "";
-      digitalWrite(Night_Light_Pin, LOW);
-      handleRoot();
-    }
-    else
-      server.send(404, "text/plain", message);
+    Night_Light_State = digitalRead(Night_Light_Pin);
+    server.send(200, "text/plain", Night_Light_State);
   }
-  if (server.uri() == "/0")
+  else if (server.uri() == "/2/on")
   {
-    if (server.hasHeader("User-Agent"))
-    {
-      Night_Light_State = digitalRead(Night_Light_Pin);
-      server.send(200, "text/plain", Night_Light_State);
-    }
-    else
-      server.send(404, "text/plain", message);
+    PerdeState = "on";
+    server.uri() = "";
+    servo.write(0);
+    delay(2000);
+    servo.write(90);
+    handleRoot();
   }
-  if (server.uri() == "/2/on")
+  else if (server.uri() == "/2/off")
   {
-    if (server.hasHeader("User-Agent"))
-    {
+    PerdeState = "off";
+    server.uri() = "";
+    servo.write(180);
+    delay(2000);
+    servo.write(90);
+    handleRoot();
 
-      PerdeState = "on";
-      //server.send(200,"text/plain","1");
-      server.uri() = "";
-      servo.write(0);
-      delay(2000);
-      servo.write(90);
-      handleRoot();
-
-    }
-    else
-      server.send(404, "text/plain", message);
   }
-  if (server.uri() == "/2/off")
+  else if (server.uri() == "/2")
   {
-    if (server.hasHeader("User-Agent"))
-    {
-      PerdeState = "off";
-      //server.send(200,"text/plain","0");
-      server.uri() = "";
-      servo.write(180);
-      delay(2000);
-      servo.write(90);
-      handleRoot();
-    }
-    else
-      server.send(404, "text/plain", message);
-  }
-  if (server.uri() == "/2")
-  {
-    if (server.hasHeader("User-Agent"))
-    {
-      if (PerdeState == "on")
-        server.send(200, "text/plain", "1");
-      if (PerdeState == "off")
-        server.send(200, "text/plain", "0");
-    }
-    else
-      server.send(404, "text/plain", message);
-  }
-  if (server.uri() == "/3/kanal1")
-  {
-    if (server.hasHeader("User-Agent"))
-    {
-      Channel = "Kanal 1";
-      //server.send(200,"text/plain","0");
-      server.uri() = "";
-      lcd.setCursor(0, 0);
-      lcd.print(Channel);
-      lcd.setCursor(0, 1);
-      lcd.print("Engin Ozan Ozkan");
-      handleRoot();
-    }
-    else
-      server.send(404, "text/plain", message);
-  }
-  if (server.uri() == "/3/kanal2")
-  {
-    if (server.hasHeader("User-Agent"))
-    {
-      Channel = "Kanal 2";
-      //server.send(200,"text/plain","0");
-      server.uri() = "";
-      lcd.setCursor(0, 0);
-      lcd.print(Channel);
-      lcd.setCursor(0, 1);
-      lcd.print("Engin Ozan Ozkan");
-      handleRoot();
-    }
-    else
-      server.send(404, "text/plain", message);
-  }
-  if (server.uri() == "/3/kapat")
-  {
-    if (server.hasHeader("User-Agent"))
-    {
-      Channel = "           ";
-      //server.send(200,"text/plain","0");
-      server.uri() = "";
-      lcd.setCursor(0, 0);
-      lcd.print(Channel);
-      lcd.setCursor(0, 1);
-      lcd.print("                ");
-      handleRoot();
-    }
-    else
-      server.send(404, "text/plain", message);
-  }
-   if (server.uri() == "/3")
-  {
-    if (server.hasHeader("User-Agent"))
-    {
-      if (Channel == "Kanal 2")
-        server.send(200, "text/plain", "2");
-      else if (Channel == "Kanal 1")
-        server.send(200, "text/plain", "1");
-      else
+    if (PerdeState == "on")
+      server.send(200, "text/plain", "1");
+    if (PerdeState == "off")
       server.send(200, "text/plain", "0");
-    }
+
+  }
+  else if (server.uri() == "/3/kanal1")
+  {
+    Channel = "Kanal 1";
+    server.uri() = "";
+    lcd.setCursor(0, 0);
+    lcd.print(Channel);
+    lcd.setCursor(0, 1);
+    lcd.print("Engin Ozan Ozkan");
+    handleRoot();
+  }
+  else if (server.uri() == "/3/kanal2")
+  {
+    Channel = "Kanal 2";
+    server.uri() = "";
+    lcd.setCursor(0, 0);
+    lcd.print(Channel);
+    lcd.setCursor(0, 1);
+    lcd.print("Engin Ozan Ozkan");
+    handleRoot();
+
+  }
+  else if (server.uri() == "/3/kapat")
+  {
+
+    Channel = "           ";
+    server.uri() = "";
+    lcd.setCursor(0, 0);
+    lcd.print(Channel);
+    lcd.setCursor(0, 1);
+    lcd.print("                ");
+    handleRoot();
+
+  }
+  else if (server.uri() == "/3")
+  {
+
+    if (Channel == "Kanal 2")
+      server.send(200, "text/plain", "2");
+    else if (Channel == "Kanal 1")
+      server.send(200, "text/plain", "1");
     else
-      server.send(404, "text/plain", message);
+      server.send(200, "text/plain", "0");
   }
   else
     server.send(404, "text/plain", message);
@@ -395,7 +338,6 @@ void setup(void) {
   WiFi.begin(ssid, password);
   Serial.println("");
   servo.attach(servoPin);
-  //servo.write(0);
   pinMode(Indoor_Lighting_Pin, OUTPUT);
   pinMode(Night_Light_Pin, OUTPUT);
 
@@ -428,8 +370,6 @@ void setup(void) {
   server.collectHeaders(headerkeys, headerkeyssize);
   server.begin();
   Serial.println("HTTP server started");
-
-
 
 }
 
