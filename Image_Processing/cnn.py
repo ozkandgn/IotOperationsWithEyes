@@ -98,6 +98,7 @@ class Detect():
         self.model = load_model("Image_Processing/model.h5")
     def set_img(self,img):
         img = cv2.resize(img,(image_x,image_y))
+        img = image_filters.gamma_correction(img,2.7)
         img = image_filters.black_and_white(img)
         #cv2.imread("2",img)
         #cv2.waitKey(3000)

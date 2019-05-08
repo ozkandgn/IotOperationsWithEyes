@@ -23,6 +23,9 @@ def enlighten_image(img,y,c):
     new_img = normalization(new_img,255)
     return new_img.astype(np.uint8)
 
+def gamma_correction(img,y):
+    return ((img/255)**y)*255
+
 def mean_filter(img):
     filt = np.ones((5,5))/20
     return conv(img,filt)
