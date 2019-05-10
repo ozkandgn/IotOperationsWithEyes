@@ -35,7 +35,7 @@ class MainUI(QDialog):
         self.azaltBtn.clicked.connect(self.azaltBtn_clicked)
         self.onaylaBtn.clicked.connect(self.onaylaBtn_clicked)
         self.count = 0
-        IP="http://192.168.137.101"
+        IP="http://192.168.137.22"
         self.led1StatusLink = IP+"/14" #defining default link
         self.led1OnLink = IP+"/14/on"
         self.led1OffLink = IP+"/14/off"

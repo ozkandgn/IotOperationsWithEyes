@@ -58,7 +58,7 @@ class Book(QMainWindow):
     def prevPage(self):
         self.pageNo = self.pageNo - 1
         if(self.pageNo <= 0):
-            self.pageNo = len(self.degerler)
+            self.pageNo = len(self.degerler) - 1
         self.textEdit.setText(''+str(self.degerler[int(self.pageNo)])+ "\n\n\n" + str(self.pageNo+1))
         
     def read1(self):
