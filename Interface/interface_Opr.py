@@ -150,10 +150,9 @@ class Interface():
                 self.book.sayfaArtirBtn_clicked()
             elif command == "c":
                 if self.book.bookCount == 1:
-                    book.nextPage(self) # sonraki sayfaya git
+                    self.book.nextPage(self) # sonraki sayfaya git
                 elif self.book.bookCount == 2:
-                    book.prevPage(self)
-                    #QtWidgets.QTabWidget.setCurrentIndex(self.book.tabWidget, 0) # onceki sayfaya git
+                    self.book.prevPage(self)
                 elif self.book.bookCount == 3:
                     self.book.close()
                     self.bookPage = 0
