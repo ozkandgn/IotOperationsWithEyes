@@ -18,7 +18,7 @@ class Television(QMainWindow):
         self.setFixedSize(918,616)
         self.tvArtirBtn.clicked.connect(self.tvArtirBtn_clicked)
         self.tvAzaltBtn.clicked.connect(self.tvAzaltBtn_clicked)
-        IP="http://192.168.137.22"
+        IP="http://192.168.137.101"
         self.tvCh1Link = IP+"/3/kanal1"
         self.tvCh2Link = IP+"/3/kanal2"
         self.tvCloseLink =IP+"/3/kapat"
@@ -47,6 +47,22 @@ class Television(QMainWindow):
             return tv_status.json()
         except:
             return 0
+    def tvOnaylaBtn_clicked(self):
+        if self.tv.tvCount == 1:
+            requests.post(self.tv.tvCh1Link)
+            self.tv.tvStatusLbl.setText("1. Kanal Acik")
+            self.widget.tvLbl.setPixmap(self.widget.tvOpenPix)
+        elif self.tv.tvCount == 2:
+            requests.post(self.tv.tvCh2Link)
+            self.tv.tvStatusLbl.setText("2. Kanal Acik")
+            self.widget.tvLbl.setPixmap(self.widget.tvOpenPix)
+        elif self.tv.tvCount == 3:
+            requests.post(self.tv.tvCloseLink)
+            self.tv.tvStatusLbl.setText("TV Kapali")
+            self.widget.tvLbl.setPixmap(self.widget.tvClosedPix)
+        elif self.tv.tvCount == 4:
+            self.tv.close()
+            self.tv_frame = 0
     
     def chStatusShow(self): #showing channel status
         if self.tvStatus() == 1:
