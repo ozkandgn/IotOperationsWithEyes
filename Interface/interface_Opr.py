@@ -35,7 +35,7 @@ class MainUI(QDialog):
         self.azaltBtn.clicked.connect(self.azaltBtn_clicked)
         self.onaylaBtn.clicked.connect(self.onaylaBtn_clicked)
         self.count = 0
-        IP="http://192.168.137.22"
+        IP="http://192.168.137.101"
         self.led1StatusLink = IP+"/14" #defining default link
         self.led1OnLink = IP+"/14/on"
         self.led1OffLink = IP+"/14/off"
@@ -150,9 +150,10 @@ class Interface():
                 self.book.sayfaArtirBtn_clicked()
             elif command == "c":
                 if self.book.bookCount == 1:
-                    QtWidgets.QTabWidget.setCurrentIndex(self.book.tabWidget, 1) # sonraki sayfaya git
+                    book.nextPage(self) # sonraki sayfaya git
                 elif self.book.bookCount == 2:
-                    QtWidgets.QTabWidget.setCurrentIndex(self.book.tabWidget, 0) # onceki sayfaya git
+                    book.prevPage(self)
+                    #QtWidgets.QTabWidget.setCurrentIndex(self.book.tabWidget, 0) # onceki sayfaya git
                 elif self.book.bookCount == 3:
                     self.book.close()
                     self.bookPage = 0
