@@ -141,9 +141,14 @@ class Interface():
         self.widget.show()
         self.book = Book()
         self.tv = Television()
-        self.thread = thread.ThreadRefresh("func_name","delay_time")
+        self.thread = thread.ThreadRefresh(refresh, 2)
         self.thread.start()
         #sys.exit(self.app.exec_())
+
+    def refresh(self):
+        widget.led1StatusShow()
+        widget.led2StatusShow()
+        widget.curtainStatusShow()
         
     def get_interface_frame(self,command):
         if self.bookPage:
@@ -153,9 +158,9 @@ class Interface():
                 self.book.sayfaArtirBtn_clicked()
             elif command == "c":
                 if self.book.bookCount == 1:
-                    self.book.nextPage(self) # sonraki sayfaya git
+                    self.book.nextPage() # sonraki sayfaya git
                 elif self.book.bookCount == 2:
-                    self.book.prevPage(self)
+                    self.book.prevPage()
                 elif self.book.bookCount == 3:
                     self.book.close()
                     self.bookPage = 0
