@@ -20,8 +20,8 @@ class MainUI(QDialog):
         self.setStyleSheet("QDialog{background-image: url(Interface/Photos/room3.jpg); background-repeat: no-repeat; background-position: center;}")
         self.countPix = QPixmap('Interface/Photos/countFrame2.png')
         self.frameLbl.setPixmap(self.countPix)
-        self.pixmap2 = QPixmap('Interface/Photos/chandelier.png')
-        self.pixmap1 = QPixmap('Interface/Photos/chandelieropen.png')
+        self.pixmap2 = QPixmap('Interface/Photos/close.png')
+        self.pixmap1 = QPixmap('Interface/Photos/open.png')
         self.label_2.setPixmap(self.pixmap2)
         self.pixmap3 = QPixmap('Interface/Photos/nightLamp_close.png')
         self.pixmap4 = QPixmap('Interface/Photos/nightLamp_open.png')
@@ -36,7 +36,7 @@ class MainUI(QDialog):
         self.azaltBtn.clicked.connect(self.azaltBtn_clicked)
         self.onaylaBtn.clicked.connect(self.onaylaBtn_clicked)
         self.count = 0
-        IP="http://192.168.137.101"
+        IP="http://192.168.137.211"
         self.led1StatusLink = IP+"/14" #defining default link
         self.led1OnLink = IP+"/14/on"
         self.led1OffLink = IP+"/14/off"
@@ -51,8 +51,10 @@ class MainUI(QDialog):
         self.curtainStatusShow()
         self.book = Book()
         self.tv = Television()
-            
-        
+        self.label_2.setPixmap(self.pixmap2)
+        self.nightBulbLbl.setPixmap(self.pixmap3)
+        self.curtainLbl.setPixmap(self.curtainClosedPix)
+
     @pyqtSlot()
     def artirBtn_clicked(self):
         self.count=self.count + 1
@@ -104,9 +106,11 @@ class MainUI(QDialog):
             return 0
     
     def led1StatusShow(self): #showing status of led_1
-        self.label_2.setPixmap(self.pixmap2)
+        #self.label_2.setPixmap(self.pixmap2)
         if self.led1Status():
             self.label_2.setPixmap(self.pixmap1)
+        else:
+            self.label_2.setPixmap(self.pixmap2)
 
     def led2Status(self):
         try:
@@ -116,9 +120,11 @@ class MainUI(QDialog):
             return 0
 
     def led2StatusShow(self): #printing status of led_2
-        self.nightBulbLbl.setPixmap(self.pixmap3)
+        #self.nightBulbLbl.setPixmap(self.pixmap3)
         if self.led2Status():
             self.nightBulbLbl.setPixmap(self.pixmap4)
+        else:
+            self.nightBulbLbl.setPixmap(self.pixmap3)
 
     def curtainStatus(self):
         try:
@@ -128,9 +134,11 @@ class MainUI(QDialog):
             return 0
 
     def curtainStatusShow(self): #printing status of curtain in room
-        self.curtainLbl.setPixmap(self.curtainClosedPix)
+        #self.curtainLbl.setPixmap(self.curtainClosedPix)
         if self.curtainStatus():
             self.curtainLbl.setPixmap(self.curtainOpenPix)
+        else:
+            self.curtainLbl.setPixmap(self.curtainClosedPix)
 
 class Interface():
     def __init__(self):
@@ -141,14 +149,15 @@ class Interface():
         self.widget.show()
         self.book = Book()
         self.tv = Television()
-        self.thread = thread.ThreadRefresh(refresh, 2)
+        self.thread = thread.ThreadRefresh(self.refresh, 2)
         self.thread.start()
         #sys.exit(self.app.exec_())
 
     def refresh(self):
-        widget.led1StatusShow()
-        widget.led2StatusShow()
-        widget.curtainStatusShow()
+        self.widget.led1StatusShow()
+        self.widget.led2StatusShow()
+        self.widget.curtainStatusShow()
+        print("refresh done")
         
     def get_interface_frame(self,command):
         if self.bookPage:
