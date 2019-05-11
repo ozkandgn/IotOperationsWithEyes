@@ -2,8 +2,7 @@ class Blinking():
     def __init__(self):
         self.__right_count = -3
         self.__left_count = -3
-        self.__back_right_count = 0
-        self.__back_left_count = 0
+        self.both_closed = False
     
     def set_blink(self, val): # coming open eye = 1, close eye = 2
         #print("val = ",val)
@@ -11,19 +10,23 @@ class Blinking():
         self.__left_count = self.calculate(self.__left_count,val[1])
         print(self.__right_count)
         print(self.__left_count)
-        if self.__right_count > -1 and self.__left_count > -1:
+        if self.__right_count > -0.4 and self.__left_count > -0.4 and self.both_closed == False:
             print("Both Close")
+            self.__right_count = 0
+            self.__left_count = 0
+            self.both_closed = True
             return 'c'
-        elif self.__right_count > 0.5 and self.__left_count < -2 and \
-             self.__back_right_count <= self.__right_count:
-                print("Right Close")
-                return '+'
-        elif self.__left_count > 0.5 and self.__right_count < -2 and \
-             self.__back_left_count <= self.__left_count:
+        elif self.__right_count > 0.5 and self.__left_count < -2:
+            print("Right Close")
+            self.__right_count = 0
+            return '+'
+        elif self.__left_count > 0.5 and self.__right_count < -2:
             print("Left Close")
+            self.__left_count = 0
             return '-'
         if self.__right_count <= -1 and self.__left_count <= -1:
             print("Both Open")
+            self.both_closed = False
             return 'o'
         elif self.__right_count <= 0 and self.__left_count > 2:
             print("Right Open")
