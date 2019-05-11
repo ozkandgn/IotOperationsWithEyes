@@ -8,6 +8,7 @@ from PyQt5.uic import loadUi
 from PyQt5 import *
 from .television import Television
 from .book import Book
+from .Threading import thread
 
 class MainUI(QDialog):
     def __init__(self):
@@ -140,6 +141,8 @@ class Interface():
         self.widget.show()
         self.book = Book()
         self.tv = Television()
+        self.thread = thread.ThreadRefresh("func_name","delay_time")
+        self.thread.start()
         #sys.exit(self.app.exec_())
         
     def get_interface_frame(self,command):
