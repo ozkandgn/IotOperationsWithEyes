@@ -10,6 +10,9 @@ from .television import Television
 from .book import Book
 from .Threading import thread
 
+book_page = 0
+tv_frame = 0
+
 class MainUI(QDialog):
     def __init__(self):
         super(MainUI,self).__init__()
@@ -36,7 +39,7 @@ class MainUI(QDialog):
         self.azaltBtn.clicked.connect(self.azaltBtn_clicked)
         self.onaylaBtn.clicked.connect(self.onaylaBtn_clicked)
         self.count = 0
-        IP="http://192.168.137.211"
+        IP="http://192.168.137.105"
         self.led1StatusLink = IP+"/14" #defining default link
         self.led1OnLink = IP+"/14/on"
         self.led1OffLink = IP+"/14/off"
@@ -92,10 +95,12 @@ class MainUI(QDialog):
             requests.post(self.curtainOffLink)
             self.curtainStatusShow()
         elif (self.count == 7):
+            global tv_frame
             tv_frame = 1
             self.tv.show()
         elif(self.count == 8):
-            bookPage = 1
+            global book_page
+            book_page = 1
             self.book.show()
 
     def led1Status(self):
@@ -141,14 +146,13 @@ class MainUI(QDialog):
             self.curtainLbl.setPixmap(self.curtainClosedPix)
 
 class Interface():
+    
     def __init__(self):
         self.app = QtWidgets.QApplication(sys.argv)
-        self.bookPage = 0
-        self.tv_frame = 0
         self.widget = MainUI()
         self.widget.show()
-        self.book = Book()
-        self.tv = Television()
+        self.book = self.widget.book
+        self.tv = self.widget.tv
         self.thread = thread.ThreadRefresh(self.refresh, 2)
         self.thread.start()
         #sys.exit(self.app.exec_())
@@ -160,7 +164,9 @@ class Interface():
         print("refresh done")
         
     def get_interface_frame(self,command):
-        if self.bookPage:
+        global book_page
+        global tv_frame
+        if book_page:
             if command == "-":
                 self.book.sayfaAzaltBtn_clicked()
             elif command == "+":
@@ -172,9 +178,9 @@ class Interface():
                     self.book.prevPage()
                 elif self.book.bookCount == 3:
                     self.book.close()
-                    self.bookPage = 0
+                    book_page = 0
         
-        elif self.tv_frame:
+        elif tv_frame:
             if command == "-":
                 self.tv.tvAzaltBtn_clicked()
             elif command == "+":
@@ -194,7 +200,7 @@ class Interface():
                     self.widget.tvLbl.setPixmap(self.widget.tvClosedPix)
                 elif self.tv.tvCount == 4:
                     self.tv.close()
-                    self.tv_frame = 0
+                    tv_frame = 0
 
         else:
             if command == "-":
@@ -203,10 +209,7 @@ class Interface():
                 self.widget.artirBtn_clicked()
             elif command == "c":
                 if(self.widget.count == 1):
-                    try:
-                        requests.post(self.widget.led1OnLink)
-                    except:
-                        pass
+                    requests.post(self.widget.led1OnLink)
                     self.widget.led1StatusShow()
                 elif(self.widget.count == 2):
                     requests.post(self.widget.led1OffLink)
@@ -224,8 +227,8 @@ class Interface():
                     requests.post(self.widget.curtainOffLink)
                     self.widget.curtainStatusShow()
                 elif (self.widget.count == 7):
-                    self.tv_frame = 1
+                    tv_frame = 1
                     self.tv.show()
                 elif(self.widget.count == 8):
-                    self.bookPage = 1
+                    book_page = 1
                     self.book.show()
