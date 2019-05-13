@@ -12,7 +12,7 @@ class Television(QMainWindow):
     def __init__(self):
         super(Television, self).__init__()
         loadUi('Interface/television.ui',self)
-        self.setWindowTitle('Televizyon Kontrol Arayüzü')
+        self.setWindowTitle('Television Control')
         self.setStyleSheet("QMainWindow{background-image: url(Interface/Photos/tvBackground.png); background-repeat: no-repeat; background-position: center;}")
         self.tvCount = 0
         self.setFixedSize(918,616)
@@ -47,6 +47,7 @@ class Television(QMainWindow):
             return tv_status.json()
         except:
             return 0
+        
     def tvOnaylaBtn_clicked(self):
         if self.tv.tvCount == 1:
             requests.post(self.tv.tvCh1Link)
