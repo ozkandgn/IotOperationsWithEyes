@@ -81,7 +81,7 @@
    <property name="geometry">
     <rect>
      <x>832</x>
-     <y>450</y>
+     <y>490</y>
      <width>101</width>
      <height>28</height>
     </rect>
@@ -126,7 +126,7 @@
      <x>680</x>
      <y>180</y>
      <width>256</width>
-     <height>251</height>
+     <height>281</height>
     </rect>
    </property>
    <property name="font">
@@ -176,12 +176,17 @@
      <string>8- Kitap Oku</string>
     </property>
    </item>
+   <item>
+    <property name="text">
+     <string>9- Haberlere Gözat</string>
+    </property>
+   </item>
   </widget>
   <widget class="QPushButton" name="azaltBtn">
    <property name="geometry">
     <rect>
      <x>680</x>
-     <y>450</y>
+     <y>490</y>
      <width>101</width>
      <height>31</height>
     </rect>
@@ -259,7 +264,7 @@
    <property name="geometry">
     <rect>
      <x>760</x>
-     <y>500</y>
+     <y>540</y>
      <width>91</width>
      <height>31</height>
     </rect>
@@ -286,6 +291,28 @@
    </property>
    <property name="text">
     <string/>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="uykuModuBtn">
+   <property name="geometry">
+    <rect>
+     <x>1070</x>
+     <y>850</y>
+     <width>181</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>15</pointsize>
+     <weight>75</weight>
+     <italic>false</italic>
+     <bold>true</bold>
+     <kerning>true</kerning>
+    </font>
+   </property>
+   <property name="text">
+    <string>UYKU MODU</string>
    </property>
   </widget>
  </widget>

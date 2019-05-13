@@ -8,10 +8,12 @@ from PyQt5.uic import loadUi
 from PyQt5 import *
 from .television import Television
 from .book import Book
+from .news import News
 from .Threading import thread
 
 book_page = 0
 tv_frame = 0
+news_frame = 0
 
 class MainUI(QDialog):
     def __init__(self):
@@ -38,6 +40,7 @@ class MainUI(QDialog):
         self.artirBtn.clicked.connect(self.artirBtn_clicked)
         self.azaltBtn.clicked.connect(self.azaltBtn_clicked)
         self.onaylaBtn.clicked.connect(self.onaylaBtn_clicked)
+        self.uykuModuBtn.clicked.connect(self.uykuModuBtn_clicked)
         self.count = 0
         IP="http://192.168.137.105"
         self.led1StatusLink = IP+"/14" #defining default link
@@ -54,6 +57,7 @@ class MainUI(QDialog):
         self.curtainStatusShow()
         self.book = Book()
         self.tv = Television()
+        #self.news = News()
         self.label_2.setPixmap(self.pixmap2)
         self.nightBulbLbl.setPixmap(self.pixmap3)
         self.curtainLbl.setPixmap(self.curtainClosedPix)
@@ -74,6 +78,16 @@ class MainUI(QDialog):
         self.label.setText(''+str(int(self.count)))
         self.listWidget.setCurrentRow(self.count-1)
         print(str(self.listWidget.currentItem().text()))
+
+    def uykuModuBtn_clicked(self):
+        requests.post(self.led1OffLink)
+        self.led1StatusShow()
+        requests.post(self.led2OffLink)
+        self.led2StatusShow()
+        requests.post(self.curtainOffLink)
+        self.curtainStatusShow()
+        requests.post(tv.tvCloseLink)
+        self.tvLbl.setPixmap(self.tvClosedPix)
 
     def onaylaBtn_clicked(self):
         if(self.count == 1):
@@ -102,6 +116,10 @@ class MainUI(QDialog):
             global book_page
             book_page = 1
             self.book.show()
+##        elif(self.count == 9):
+##            global news_frame
+##            news_frame = 1
+##            self.news.show()
 
     def led1Status(self):
         try:
@@ -153,6 +171,7 @@ class Interface():
         self.widget.show()
         self.book = self.widget.book
         self.tv = self.widget.tv
+        #self.news = self.widget.news
         self.thread = thread.ThreadRefresh(self.refresh, 2)
         self.thread.start()
         #sys.exit(self.app.exec_())
@@ -166,6 +185,7 @@ class Interface():
     def get_interface_frame(self,command):
         global book_page
         global tv_frame
+        global news_frame
         if book_page:
             if command == "-":
                 self.book.sayfaAzaltBtn_clicked()
@@ -202,6 +222,25 @@ class Interface():
                     self.tv.close()
                     tv_frame = 0
 
+##        elif news_frame:
+##            if command == "-":
+##                self.news.haberAzaltBtn_clicked()
+##            elif command == "+":
+##                self.news.haberArtirBtn_clicked()
+##            elif command == "c":
+##                if self.news.newsCount == 1:
+##                    # birinci siteye response
+##                    print("asdasd")
+##                elif self.news.newsCount == 2:
+##                    print("asdasd")
+##                    # ikinci siteye response
+##                elif self.news.newsCount == 3:
+##                    print("asdasd")
+##                    # ucuncu siteye response
+##                elif self.news.newsCount == 4:
+##                    self.news.close()
+##                    news_frame = 0
+            
         else:
             if command == "-":
                 self.widget.azaltBtn_clicked()
@@ -232,3 +271,6 @@ class Interface():
                 elif(self.widget.count == 8):
                     book_page = 1
                     self.book.show()
+                elif(self.widget.count == 9):
+                    news_frame = 1
+                    self.news.show()
