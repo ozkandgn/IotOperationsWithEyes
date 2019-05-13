@@ -7,12 +7,12 @@
 LiquidCrystal_I2C lcd(0x3f, 16, 2);
 
 #ifndef Wifi_Name
-#define Wifi_Name "[Wifi name]"
-#define Wifi_Pass  "[Wifi Pass]"
+#define Wifi_Name "Engin"
+#define Wifi_Pass  "engin12345"
 #endif
 
-#define KullaniciAdi "[User Name]"
-#define KullaniciSifre "[User Pass]"
+#define KullaniciAdi "admin"
+#define KullaniciSifre "admin"
 
 const char* ssid = Wifi_Name;
 const char* password = Wifi_Pass;
@@ -240,19 +240,25 @@ else if (server.uri() == "/0")
 }
 else if (server.uri() == "/2/on")
 {
+  if (PerdeState == "off")
+  {
   PerdeState = "on";
   server.uri() = "";
   servo.write(0);
   delay(2000);
   servo.write(90);
+  }
   handleRoot();
 }
 else if (server.uri() == "/2/off")
 {
+  if (PerdeState == "on")
+  {
   PerdeState = "off";
   server.uri() = "";
   servo.write(180);
   delay(2000);
+  }
   servo.write(90);
   handleRoot();
 }
