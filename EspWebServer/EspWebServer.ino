@@ -258,8 +258,8 @@ else if (server.uri() == "/2/off")
   server.uri() = "";
   servo.write(180);
   delay(2000);
-  }
   servo.write(90);
+  }
   handleRoot();
 }
 else if (server.uri() == "/2")
@@ -309,6 +309,28 @@ else if (server.uri() == "/3")
     server.send(200, "text/plain", "1");
   else
     server.send(200, "text/plain", "0");
+}
+else if (server.uri() == "/uykumodu")
+{
+  server.uri() = "";
+  Indoor_Lighting_State = "off";
+  digitalWrite(Indoor_Lighting_Pin, LOW);
+  Night_Light_State = "off";
+  digitalWrite(Night_Light_Pin, LOW);
+  Channel = "           ";
+  lcd.setCursor(0, 0);
+  lcd.print(Channel);
+  lcd.setCursor(0, 1);
+  lcd.print("                ");
+  if (PerdeState == "on")
+  {
+  PerdeState = "off";
+  server.uri() = "";
+  servo.write(180);
+  delay(2000);
+  servo.write(90);
+  }
+  handleRoot();
 }
 else
   server.send(404, "text/plain", message);
