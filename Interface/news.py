@@ -26,9 +26,11 @@ class News(QMainWindow):
         self.newsCount = 0
         self.haberArtirBtn.clicked.connect(self.haberArtirBtn_clicked)
         self.haberAzaltBtn.clicked.connect(self.haberAzaltBtn_clicked)
+        self.haberOnaylaBtn.clicked.connect(self.haberOnaylaBtn_clicked)
+        
 
     def open_browser(self):
-        driver_path = "C:/Users/ozans/Desktop/haber/chromedriver_win32/chromedriver"
+        driver_path = "C:/Users/ozans/Desktop/IotOperationsWithEyes/Interface/chromedriver_win32/chromedriver"
         self.browser = webdriver.Chrome(executable_path=driver_path)
         self.haberler = []
         self.link = "https://www.posta.com.tr"
@@ -53,16 +55,16 @@ class News(QMainWindow):
         print(str(self.haberList.currentItem().text()))
 
     def haberOnaylaBtn_clicked(self):
-        if self.news.newsCount == 1:
+        if self.newsCount == 1:
             self.openNews()
-        elif self.news.newsCount == 2:
-            self.news.openNews()
-        elif self.news.newsCount == 3:
-            self.news.openNews()
-        elif self.news.newsCount == 4:
+        elif self.newsCount == 2:
+            self.openNews()
+        elif self.newsCount == 3:
+            self.openNews()
+        elif self.newsCount == 4:
             #self.news.browser.quit()
             self.close()
-            #news_frame = 0
+            self.news_frame = 0
 
     def getNewsHeader(self):
         url = "https://www.posta.com.tr/son-dakika-haberleri"
