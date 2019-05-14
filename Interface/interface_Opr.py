@@ -244,8 +244,6 @@ class Interface():
                     self.news.browser.execute_script(exec_script)
                     self.scroll_value += 500
             elif command == "c":
-                print("kasar ozan")
-                print("")
                 if self.browser_flag == False:
                     self.browser_flag = True
                     if self.news.newsCount == 1:
