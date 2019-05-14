@@ -53,15 +53,16 @@ class News(QMainWindow):
         print(str(self.haberList.currentItem().text()))
 
     def haberOnaylaBtn_clicked(self):
-        if(self.news.newsCount == 1):
+        if self.news.newsCount == 1:
             self.openNews()
-        elif(self.news.newsCount == 2):
-            self.openNews()
-        elif(self.news.newsCount == 3):
-            self.openNews()
-        elif (self.news.newsCount == 4):
+        elif self.news.newsCount == 2:
+            self.news.openNews()
+        elif self.news.newsCount == 3:
+            self.news.openNews()
+        elif self.news.newsCount == 4:
+            #self.news.browser.quit()
             self.close()
-            self.news_frame = 0
+            #news_frame = 0
 
     def getNewsHeader(self):
         url = "https://www.posta.com.tr/son-dakika-haberleri"
