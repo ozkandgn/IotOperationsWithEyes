@@ -42,7 +42,7 @@ class MainUI(QDialog):
         self.onaylaBtn.clicked.connect(self.onaylaBtn_clicked)
         self.uykuModuBtn.clicked.connect(self.uykuModuBtn_clicked)
         self.count = 0
-        IP="http://192.168.137.116"
+        IP="http://192.168.137.171"
         self.led1StatusLink = IP+"/14" #defining default link
         self.led1OnLink = IP+"/14/on"
         self.led1OffLink = IP+"/14/off"
@@ -186,7 +186,12 @@ class Interface():
         self.widget.led1StatusShow()
         self.widget.led2StatusShow()
         self.widget.curtainStatusShow()
-        print("refresh done")   
+        if self.tv.tvStatus() == 0:
+            self.widget.tvLbl.setPixmap(self.widget.tvClosedPix)
+        else:
+            self.widget.tvLbl.setPixmap(self.widget.tvOpenPix)
+            
+        print("refresh done")
         
     def get_interface_frame(self,command):
         global book_page
