@@ -42,7 +42,7 @@ class MainUI(QDialog):
         self.onaylaBtn.clicked.connect(self.onaylaBtn_clicked)
         self.uykuModuBtn.clicked.connect(self.uykuModuBtn_clicked)
         self.count = 0
-        IP="http://192.168.137.105"
+        IP="http://192.168.43.196"
         self.led1StatusLink = IP+"/14" #defining default link
         self.led1OnLink = IP+"/14/on"
         self.led1OffLink = IP+"/14/off"
@@ -57,7 +57,7 @@ class MainUI(QDialog):
         self.curtainStatusShow()
         self.book = Book()
         self.tv = Television()
-        #self.news = News()
+        self.news = News()
         self.label_2.setPixmap(self.pixmap2)
         self.nightBulbLbl.setPixmap(self.pixmap3)
         self.curtainLbl.setPixmap(self.curtainClosedPix)
@@ -86,7 +86,7 @@ class MainUI(QDialog):
         self.led2StatusShow()
         requests.post(self.curtainOffLink)
         self.curtainStatusShow()
-        requests.post(tv.tvCloseLink)
+        requests.post(self.tv.tvCloseLink)
         self.tvLbl.setPixmap(self.tvClosedPix)
 
     def onaylaBtn_clicked(self):
@@ -116,11 +116,12 @@ class MainUI(QDialog):
             global book_page
             book_page = 1
             self.book.show()
-##        elif(self.count == 9):
-##            global news_frame
-##            news_frame = 1
-##            self.news.show()
-
+        elif(self.count == 9):
+            global news_frame
+            news_frame = 1
+            self.news.open_browser()
+            self.news.show()
+            
     def led1Status(self):
         try:
             led1status = requests.post(self.led1StatusLink)
@@ -171,16 +172,19 @@ class Interface():
         self.widget.show()
         self.book = self.widget.book
         self.tv = self.widget.tv
-        #self.news = self.widget.news
+        self.news = self.widget.news
         self.thread = thread.ThreadRefresh(self.refresh, 2)
         self.thread.start()
+        self.scrollStatus = 0
+        self.scroll_value = 1000
+        self.browser_flag = False
         #sys.exit(self.app.exec_())
 
     def refresh(self):
         self.widget.led1StatusShow()
         self.widget.led2StatusShow()
         self.widget.curtainStatusShow()
-        print("refresh done")
+        print("refresh done")   
         
     def get_interface_frame(self,command):
         global book_page
@@ -222,25 +226,42 @@ class Interface():
                     self.tv.close()
                     tv_frame = 0
 
-##        elif news_frame:
-##            if command == "-":
-##                self.news.haberAzaltBtn_clicked()
-##            elif command == "+":
-##                self.news.haberArtirBtn_clicked()
-##            elif command == "c":
-##                if self.news.newsCount == 1:
-##                    # birinci siteye response
-##                    print("asdasd")
-##                elif self.news.newsCount == 2:
-##                    print("asdasd")
-##                    # ikinci siteye response
-##                elif self.news.newsCount == 3:
-##                    print("asdasd")
-##                    # ucuncu siteye response
-##                elif self.news.newsCount == 4:
-##                    self.news.close()
-##                    news_frame = 0
-            
+        elif news_frame:
+            if command == "-":
+                if self.browser_flag == False:
+                    self.news.haberAzaltBtn_clicked()
+                else:
+                    #touchactions = TouchActions(self.browser)
+                    exec_script = "window.scrollTo(0, "+str(self.scroll_value)+");"
+                    self.news.browser.execute_script(exec_script)
+                    self.scroll_value -= 500
+            elif command == "+":
+                if self.browser_flag == False:
+                    self.news.haberArtirBtn_clicked()
+                else:
+                    #touchactions = TouchActions(self.browser)
+                    exec_script = "window.scrollTo(0, "+str(self.scroll_value)+");"
+                    self.news.browser.execute_script(exec_script)
+                    self.scroll_value += 500
+            elif command == "c":
+                print("kasar ozan")
+                print("")
+                if self.browser_flag == False:
+                    self.browser_flag = True
+                    if self.news.newsCount == 1:
+                        self.news.openNews()
+                    elif self.news.newsCount == 2:
+                        self.news.openNews()
+                    elif self.news.newsCount == 3:
+                        self.news.openNews()
+                    elif self.news.newsCount == 4:
+                        self.news.browser.quit()
+                        self.news.close()
+                        news_frame = 0
+                else:
+                    self.news.browser.quit()
+                    self.news.close()
+                    self.browser_flag = False   
         else:
             if command == "-":
                 self.widget.azaltBtn_clicked()
@@ -273,4 +294,5 @@ class Interface():
                     self.book.show()
                 elif(self.widget.count == 9):
                     news_frame = 1
+                    self.news.open_browser()
                     self.news.show()
