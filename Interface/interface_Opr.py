@@ -42,7 +42,7 @@ class MainUI(QDialog):
         self.onaylaBtn.clicked.connect(self.onaylaBtn_clicked)
         self.uykuModuBtn.clicked.connect(self.uykuModuBtn_clicked)
         self.count = 0
-        IP="http://192.168.43.196"
+        IP="http://192.168.137.116"
         self.led1StatusLink = IP+"/14" #defining default link
         self.led1OnLink = IP+"/14/on"
         self.led1OffLink = IP+"/14/off"
@@ -52,6 +52,7 @@ class MainUI(QDialog):
         self.curtainStatusLink = IP+"/2"
         self.curtainOnLink = IP+"/2/on"
         self.curtainOffLink = IP+"/2/off"
+        self.sleepModLink = IP + "/uykumodu"
         self.led1StatusShow()
         self.led2StatusShow()
         self.curtainStatusShow()
@@ -80,14 +81,15 @@ class MainUI(QDialog):
         print(str(self.listWidget.currentItem().text()))
 
     def uykuModuBtn_clicked(self):
-        requests.post(self.led1OffLink)
-        self.led1StatusShow()
-        requests.post(self.led2OffLink)
-        self.led2StatusShow()
-        requests.post(self.curtainOffLink)
-        self.curtainStatusShow()
-        requests.post(self.tv.tvCloseLink)
-        self.tvLbl.setPixmap(self.tvClosedPix)
+        requests.post(self.sleepModLink)
+##        requests.post(self.led1OffLink)
+##        self.led1StatusShow()
+##        requests.post(self.led2OffLink)
+##        self.led2StatusShow()
+##        requests.post(self.curtainOffLink)
+##        self.curtainStatusShow()
+##        requests.post(self.tv.tvCloseLink)
+##        self.tvLbl.setPixmap(self.tvClosedPix)
 
     def onaylaBtn_clicked(self):
         if(self.count == 1):
